@@ -119,6 +119,7 @@ public struct TrackSaleRequestBody: Codable, Sendable {
 }
 
 public enum PaymentProcessor: String, Codable, Sendable {
+    case apple
     case stripe
     case shopify
     case polar
