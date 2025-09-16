@@ -52,6 +52,13 @@ public actor Dub {
     }
 
     // MARK: - Tracking Methods
+    /// Tracks the open event for deep links and deferred deep links.
+    ///
+    /// `trackOpen` should be called under two scenarios:
+    ///    1. Any time the application was opened from a url. The function should be called with the `deepLink` parameter.
+    ///    2. The first time the application launches, it should be called with no `deepLink`
+    /// - Parameter deepLink: The url with which the application was opened.
+    /// - Returns: `TrackOpenResponse` contains the resolved `Link` and `clickId` if they were resolved successfully. `link?.url` may be used as the final destination for the link.
     public func trackOpen(deepLink: URL? = nil) async throws -> TrackOpenResponse {
         let body: TrackOpenRequestBody
 
@@ -86,7 +93,18 @@ public actor Dub {
             throw error
         }
     }
-
+    
+    /// Track a lead for a short link.
+    /// - Parameters:
+    ///   - eventName: The name of the lead event to track. Can also be used as a unique identifier to associate a given lead event for a customer for a subsequent sale event (via the leadEventName prop in /track/sale). Required string length: 1 - 255. Example: "Sign up"
+    ///   - customerExternalId: The unique ID of the customer in your system. Will be used to identify and attribute all future events to this customer. Required string length: 1 - 100
+    ///   - customerName: The name of the customer. If not passed, a random name will be generated (e.g. “Big Red Caribou”).
+    ///   - customerEmail: The email address of the customer.
+    ///   - customerAvatar: The avatar URL of the customer.
+    ///   - mode: The mode to use for tracking the lead event. async will not block the request; wait will block the request until the lead event is fully recorded in Dub; deferred will defer the lead event creation to a subsequent request. Available options: async, wait, deferred. Default: async.
+    ///   - eventQuantity: The numerical value associated with this lead event (e.g., number of provisioned seats in a free trial). If defined as N, the lead event will be tracked N times.
+    ///   - metadata: Additional metadata to be stored with the lead event. Max 10,000 characters.
+    /// - Returns: `TrackLeadResponse`
     public func trackLead(
         eventName: String,
         customerExternalId: String,
@@ -123,7 +141,21 @@ public actor Dub {
             throw error
         }
     }
-
+    
+    /// Track a sale for a short link.
+    /// - Parameters:
+    ///   - customerExternalId: The unique ID of the customer in your system. Will be used to identify and attribute all future events to this customer. Required string length: 1 - 100.
+    ///   - amount: The amount of the sale in cents (for all two-decimal currencies). If the sale is in a zero-decimal currency, pass the full integer value (e.g. 1437 JPY). Learn more: https://d.to/currency
+    ///   - currency: The currency of the sale. Accepts ISO 4217 currency codes. Sales will be automatically converted and stored as USD at the latest exchange rates. Learn more: https://d.to/currency
+    ///   - eventName: The name of the sale event. Recommended format: Invoice paid or Subscription created.
+    ///   - paymentProcessor: The payment processor via which the sale was made. Available options: stripe, shopify, polar, paddle, revenuecat, custom.
+    ///   - invoiceId: The invoice ID of the sale. Can be used as a idempotency key – only one sale event can be recorded for a given invoice ID.
+    ///   - metadata: Additional metadata to be stored with the sale event. Max 10,000 characters when stringified.
+    ///   - leadEventName: The name of the lead event that occurred before the sale (case-sensitive). This is used to associate the sale event with a particular lead event (instead of the latest lead event for a link-customer combination, which is the default behavior). For sale tracking without a pre-existing lead event, this field can also be used to specify the lead event name.
+    ///   - customerName: [For sale tracking without a pre-existing lead event]: The name of the customer. If not passed, a random name will be generated (e.g. “Big Red Caribou”).
+    ///   - customerEmail: [For sale tracking without a pre-existing lead event]: The email address of the customer.
+    ///   - customerAvatar: [For sale tracking without a pre-existing lead event]: The avatar URL of the customer.
+    /// - Returns: `TrackSaleResponse`
     public func trackSale(
         customerExternalId: String,
         amount: Int,
