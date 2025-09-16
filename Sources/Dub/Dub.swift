@@ -58,7 +58,7 @@ public actor Dub {
     ///    1. Any time the application was opened from a url. The function should be called with the `deepLink` parameter.
     ///    2. The first time the application launches, it should be called with no `deepLink`
     /// - Parameter deepLink: The url with which the application was opened.
-    /// - Returns: `TrackOpenResponse` contains the resolved `Link` and `clickId` if they were resolved successfully. `link?.url` may be used as the final destination for the link.
+    /// - Returns: `Structures/TrackOpenResponse`
     public func trackOpen(deepLink: URL? = nil) async throws -> TrackOpenResponse {
         let body: TrackOpenRequestBody
 
@@ -104,7 +104,7 @@ public actor Dub {
     ///   - mode: The mode to use for tracking the lead event. async will not block the request; wait will block the request until the lead event is fully recorded in Dub; deferred will defer the lead event creation to a subsequent request. Available options: async, wait, deferred. Default: async.
     ///   - eventQuantity: The numerical value associated with this lead event (e.g., number of provisioned seats in a free trial). If defined as N, the lead event will be tracked N times.
     ///   - metadata: Additional metadata to be stored with the lead event. Max 10,000 characters.
-    /// - Returns: `TrackLeadResponse`
+    /// - Returns: `Structures/TrackLeadResponse`
     public func trackLead(
         eventName: String,
         customerExternalId: String,
@@ -155,7 +155,7 @@ public actor Dub {
     ///   - customerName: [For sale tracking without a pre-existing lead event]: The name of the customer. If not passed, a random name will be generated (e.g. “Big Red Caribou”).
     ///   - customerEmail: [For sale tracking without a pre-existing lead event]: The email address of the customer.
     ///   - customerAvatar: [For sale tracking without a pre-existing lead event]: The avatar URL of the customer.
-    /// - Returns: `TrackSaleResponse`
+    /// - Returns: `Structures/TrackSaleResponse`
     public func trackSale(
         customerExternalId: String,
         amount: Int,
