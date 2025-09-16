@@ -47,7 +47,7 @@ And supports the following device platforms:
 | iOS      | 16.0               |
 | macOS    | 10.13 (Ventura)    |
 
-If you require additional compatability, [let us know](https://dub.co/contact)!
+If you require additional compatability, [let us know](https://dub.co/contact/support)!
 
 
 <!-- Start SDK Installation [installation] -->
@@ -77,7 +77,7 @@ Option 2: You may manually install the package by navigating to the `Package Dep
 
 ### Other
 
-If you have additional installation requirements, [let us know](https://dub.co/contact)!
+If you have additional installation requirements, [let us know](https://dub.co/contact/support)!
 
 
 <!-- Usage [usage] -->
