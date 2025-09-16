@@ -23,6 +23,7 @@ Learn more about the Dub.co iOS SDK in the [official documentation](https://dub.
   * [Installation](#Installation)
   * [Usage](#usage)
 * [Development](#development)
+  * [Documentation](#documentation)
   * [Contributions](#contributions)
 
 <!-- End Table of Contents [toc] -->
@@ -88,6 +89,17 @@ The SwiftUI example may be found at `/Examples/SwiftUI`.
 
 
 # Development
+
+## Documentation
+This project uses the [Swift-DocC Plugin](https://github.com/apple/swift-docc-plugin) to generate SDK docs from code comments. 
+
+To generate documents manually run the following command from the project root:
+
+```bash
+swift package --allow-writing-to-directory ./docs generate-documentation --target Dub --output-path ./docs
+```
+    
+To write doc comments, hover over a symbol and press `⌘ + ⌥ + /` (command + option + forward slash).
 
 ## Contributions
 
