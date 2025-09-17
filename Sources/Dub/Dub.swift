@@ -31,6 +31,10 @@ public actor Dub {
     private var publishableKey: String
     private let domain: String
 
+    public var clickId: String? {
+        storage.clickId
+    }
+
     // MARK: - Init
     private init(
         publishableKey: String,

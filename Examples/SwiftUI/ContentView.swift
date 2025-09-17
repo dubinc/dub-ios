@@ -195,7 +195,7 @@ struct ContentView: View {
     }
 
     // Step 3: Track a sale event whenever a user completes a purchase in your app.
-    // Learn more about lead tracking [here](https://dub.co/docs/conversions/sales/client-side)
+    // Learn more about sale tracking [here](https://dub.co/docs/conversions/sales/client-side)
     private func trackSale(
         customerExternalId: String,
         amount: Int,
@@ -205,7 +205,6 @@ struct ContentView: View {
         invoiceId: String? = nil,
         metadata: Metadata? = nil,
         leadEventName: String? = nil,
-        clickId: String? = nil,
         customerName: String? = nil,
         customerEmail: String? = nil,
         customerAvatar: String? = nil
