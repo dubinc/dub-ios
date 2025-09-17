@@ -59,6 +59,7 @@ public actor Dub {
     ///    2. The first time the application launches, it should be called with no `deepLink`
     /// - Parameter deepLink: The url with which the application was opened.
     /// - Returns: `Structures/TrackOpenResponse`
+    @discardableResult
     public func trackOpen(deepLink: URL? = nil) async throws -> TrackOpenResponse {
         let body: TrackOpenRequestBody
 
@@ -67,7 +68,7 @@ public actor Dub {
             body = TrackOpenRequestBody(deepLink: deepLink.absoluteString, dubDomain: domain)
         } else {
 #if os(iOS) || os(watchOS) || os(tvOS)
-            let clipboard = UIPasteboard.general.string
+            let clipboard = UIPasteboard.general.hasStrings ? UIPasteboard.general.string : nil
 #elseif os(macOS)
             let clipboard = NSPasteboard.general.string(forType: .URL)
 #else
@@ -105,6 +106,7 @@ public actor Dub {
     ///   - eventQuantity: The numerical value associated with this lead event (e.g., number of provisioned seats in a free trial). If defined as N, the lead event will be tracked N times.
     ///   - metadata: Additional metadata to be stored with the lead event. Max 10,000 characters.
     /// - Returns: `Structures/TrackLeadResponse`
+    @discardableResult
     public func trackLead(
         eventName: String,
         customerExternalId: String,
@@ -156,6 +158,7 @@ public actor Dub {
     ///   - customerEmail: [For sale tracking without a pre-existing lead event]: The email address of the customer.
     ///   - customerAvatar: [For sale tracking without a pre-existing lead event]: The avatar URL of the customer.
     /// - Returns: `Structures/TrackSaleResponse`
+    @discardableResult
     public func trackSale(
         customerExternalId: String,
         amount: Int,
