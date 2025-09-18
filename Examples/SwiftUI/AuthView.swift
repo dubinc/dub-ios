@@ -73,7 +73,7 @@ struct AuthView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
-                    .background(Color.blue)
+                    .background(.blue)
                     .foregroundColor(.white)
                     .cornerRadius(12)
                 }

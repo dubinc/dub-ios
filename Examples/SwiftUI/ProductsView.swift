@@ -83,7 +83,7 @@ struct ProductsView: View {
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 8)
-                                .background(Color.blue)
+                                .background(.blue)
                                 .cornerRadius(20)
                         }
                     }
@@ -142,7 +142,7 @@ struct ProductCardView: View {
 
                     Text("$\(product.price, specifier: "%.2f")")
                         .font(.system(size: 18, weight: .bold))
-                        .foregroundColor(.black)
+                        .foregroundColor(Color(.darkText))
                 }
                 .padding(.horizontal, 8)
                 .padding(.bottom, 8)

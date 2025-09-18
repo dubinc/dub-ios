@@ -73,7 +73,7 @@ struct ProductDetailView: View {
                         HStack(alignment: .center) {
                             Text("$\(product.price, specifier: "%.2f")")
                                 .font(.system(size: 32, weight: .bold))
-                                .foregroundColor(.black)
+                                .foregroundColor(Color(.darkText))
 
                             if product.discountPercentage > 0 {
                                 VStack(alignment: .leading) {
@@ -136,7 +136,7 @@ struct ProductDetailView: View {
                                 .font(.system(size: 18, weight: .semibold))
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 16)
-                                .background(Color.blue)
+                                .background(.blue)
                                 .foregroundColor(.white)
                                 .cornerRadius(16)
                         }
