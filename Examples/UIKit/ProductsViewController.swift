@@ -19,8 +19,7 @@ class ProductsViewController: UIViewController {
     private let authManager = AuthManager.shared
 
     // Callbacks
-    var onUserAuthenticated: ((LoginResponse) -> Void)?
-    var onProductPurchased: ((Product) -> Void)?
+    var onProductPurchased: ((Product, User) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,15 +27,6 @@ class ProductsViewController: UIViewController {
         setupUI()
         setupNotifications()
         loadProducts()
-
-        // Set default callbacks
-        onUserAuthenticated = { user in
-            print("User authenticated: \(user.username)")
-        }
-
-        onProductPurchased = { product in
-            print("Product purchased: \(product.title)")
-        }
     }
 
     deinit {
@@ -159,7 +149,6 @@ class ProductsViewController: UIViewController {
         } else {
             let authVC = AuthViewController()
             authVC.onUserAuthenticated = { [weak self] user in
-                self?.onUserAuthenticated?(user)
                 self?.dismiss(animated: true)
             }
             let navController = UINavigationController(rootViewController: authVC)

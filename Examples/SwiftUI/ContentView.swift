@@ -51,12 +51,12 @@ struct ContentView: View {
         .environmentObject(authManager)
     }
 
-    private func onProductPurchased(_ product: Product, user: LoginResponse) {
+    private func onProductPurchased(_ product: Product, user: User) {
         authManager.login(user: user)
         trackSale(product: product, user: user)
     }
 
-    private func onUserAuthenticated(_ user: LoginResponse) {
+    private func onUserAuthenticated(_ user: User) {
         authManager.login(user: user)
         trackLead(for: user)
     }
@@ -94,7 +94,7 @@ struct ContentView: View {
 
     // Step 1: Track a lead event
     // Learn more about lead tracking [here](https://dub.co/docs/conversions/leads/client-side)
-    private func trackLead(for user: LoginResponse) {
+    private func trackLead(for user: User) {
         Task {
             do {
                 let response = try await dub.trackLead(
@@ -113,14 +113,14 @@ struct ContentView: View {
 
     // Step 3: Track a sale event whenever a user completes a purchase in your app.
     // Learn more about sale tracking [here](https://dub.co/docs/conversions/sales/client-side)
-    private func trackSale(product: Product, user: LoginResponse) {
+    private func trackSale(product: Product, user: User) {
         Task {
             do {
                 let response = try await dub.trackSale(
                     customerExternalId: user.id,
                     amount: Int(round(product.price * 100)),
                     currency: "usd",
-                    eventName: "Product purchase"
+                    eventName: "Purchase"
                 )
 
                 print(response)

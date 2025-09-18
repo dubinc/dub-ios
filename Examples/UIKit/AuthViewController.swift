@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Dub
 
 // MARK: - Auth View Controller
 class AuthViewController: UIViewController {
@@ -20,7 +21,7 @@ class AuthViewController: UIViewController {
     private let errorLabel = UILabel()
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
 
-    var onUserAuthenticated: ((LoginResponse) -> Void)?
+    var onUserAuthenticated: ((User) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -167,14 +168,26 @@ class AuthViewController: UIViewController {
         loginButton.setTitle("", for: .normal)
         loginButton.isEnabled = false
 
-        Task {
+        Task { @MainActor in
             do {
                 let user = try await APIService.shared.login(username: username, password: password)
 
                 AuthManager.shared.login(user: user)
                 onUserAuthenticated?(user)
+
+                // Track the lead event in Dub
+                let response = try await Dub.shared.trackLead(
+                    eventName: "User Sign Up",
+                    customerExternalId: user.id,
+                    customerName: "\(user.firstName) \(user.lastName)",
+                    customerEmail: user.email
+                )
+
+                print(response)
+
                 dismiss(animated: true)
             } catch {
+                print("Login failed: \(error.localizedDescription)")
                 errorLabel.text = "Login failed. Please check your credentials."
                 errorLabel.isHidden = false
             }

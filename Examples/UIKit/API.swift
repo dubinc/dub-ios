@@ -44,17 +44,6 @@ struct LoginRequest: Codable {
     let password: String
 }
 
-struct LoginResponse: Codable {
-    let id: Int
-    let username: String
-    let email: String
-    let firstName: String
-    let lastName: String
-    let gender: String
-    let image: String
-    let token: String?
-}
-
 // MARK: - API Service
 struct APIService {
     private let baseURL = "https://dummyjson.com"
@@ -80,7 +69,7 @@ struct APIService {
         return try JSONDecoder().decode(Product.self, from: data)
     }
 
-    func login(username: String, password: String) async throws -> LoginResponse {
+    func login(username: String, password: String) async throws -> User {
         guard let url = URL(string: "\(baseURL)/auth/login") else {
             throw URLError(.badURL)
         }
@@ -93,7 +82,7 @@ struct APIService {
         request.httpBody = try JSONEncoder().encode(loginRequest)
 
         let (data, _) = try await URLSession.shared.data(for: request)
-        let response = try JSONDecoder().decode(LoginResponse.self, from: data)
+        let response = try JSONDecoder().decode(User.self, from: data)
         return response
     }
 }

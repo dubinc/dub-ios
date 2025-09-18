@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Dub
 
 // MARK: - Product Detail View Controller
 class ProductDetailViewController: UIViewController {
@@ -15,7 +16,7 @@ class ProductDetailViewController: UIViewController {
     private let imageView = UIImageView()
 
     private let product: Product
-    var onProductPurchased: ((Product) -> Void)?
+    var onProductPurchased: ((Product, User) -> Void)?
 
     init(product: Product) {
         self.product = product
@@ -281,12 +282,47 @@ class ProductDetailViewController: UIViewController {
         // Content is configured in setupProductInfo()
     }
 
+    private func presentAuthViewController() {
+        let authVC = AuthViewController()
+        authVC.onUserAuthenticated = { [weak self] user in
+            self?.dismiss(animated: true)
+        }
+        let navController = UINavigationController(rootViewController: authVC)
+        present(navController, animated: true)
+    }
+
+    private func purchaseProduct() {
+
+        guard let user = AuthManager.shared.currentUser else {
+            self.presentAuthViewController()
+            return
+        }
+
+        // Handle the purchasing of your product here
+
+        Task { @MainActor in
+            do {
+                let response = try await Dub.shared.trackSale(
+                    customerExternalId: user.id,
+                    amount: Int(round(product.price * 100)),
+                    currency: "usd",
+                    eventName: "Purchase"
+                )
+
+                print(response)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+
+        dismiss(animated: true)
+    }
+
     @objc private func doneTapped() {
         dismiss(animated: true)
     }
 
     @objc private func purchaseButtonTapped() {
-        onProductPurchased?(product)
-        dismiss(animated: true)
+        purchaseProduct()
     }
 }

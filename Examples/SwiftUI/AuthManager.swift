@@ -10,9 +10,9 @@ import SwiftUI
 // MARK: - Auth Manager
 class AuthManager: ObservableObject {
     @Published var isAuthenticated = false
-    @Published var currentUser: LoginResponse?
+    @Published var currentUser: User?
 
-    func login(user: LoginResponse) {
+    func login(user: User) {
         currentUser = user
         isAuthenticated = true
     }

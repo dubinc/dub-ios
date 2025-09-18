@@ -12,11 +12,11 @@ class AuthManager {
     static let shared = AuthManager()
 
     private(set) var isAuthenticated = false
-    private(set) var currentUser: LoginResponse?
+    private(set) var currentUser: User?
 
     private init() {}
 
-    func login(user: LoginResponse) {
+    func login(user: User) {
         currentUser = user
         isAuthenticated = true
         NotificationCenter.default.post(name: .userDidLogin, object: user)

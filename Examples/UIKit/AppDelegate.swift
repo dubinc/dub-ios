@@ -80,15 +80,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
                     // Present the view controller for the product
                     // Get the scene delegate and present the product detail view controller
-                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                              let sceneDelegate = windowScene.delegate as? SceneDelegate,
-                              let window = sceneDelegate.window,
-                              let navigationController = window.rootViewController as? UINavigationController else {
-                            return
-                        }
-                        
-                        let productDetailVC = ProductDetailViewController(product: product)
-                        navigationController.present(productDetailVC, animated: true)
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                          let sceneDelegate = windowScene.delegate as? SceneDelegate,
+                          let window = sceneDelegate.window,
+                          let navigationController = window.rootViewController as? UINavigationController else {
+                        return
+                    }
+
+                    let detailVC = ProductDetailViewController(product: product)
+                    let navController = UINavigationController(rootViewController: detailVC)
+
+                    navigationController.present(navController, animated: true)
                 }
             } catch let error as DubError {
                 print(error.localizedDescription)
@@ -97,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: UISceneSession Lifecycle
-
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.

@@ -16,11 +16,11 @@ struct ProductsView: View {
     @State private var showingAuth = false
     @State private var selectedProduct: Product?
 
-    let onUserAuthenticated: (LoginResponse) -> Void
+    let onUserAuthenticated: (User) -> Void
     let onProductSelected: (Product) -> Void
 
     init(
-        onUserAuthenticated: @escaping (LoginResponse) -> Void,
+        onUserAuthenticated: @escaping (User) -> Void,
         onProductSelected: @escaping (Product) -> Void
     ) {
         self.onUserAuthenticated = onUserAuthenticated

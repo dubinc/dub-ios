@@ -16,7 +16,7 @@ struct ProductDetailView: View {
     @State private var showingAuth = false
 
     let product: Product
-    let onProductPurchased: (Product, LoginResponse) -> Void
+    let onProductPurchased: (Product, User) -> Void
 
     var body: some View {
         NavigationView {

@@ -18,9 +18,9 @@ struct AuthView: View {
     @State private var isLoading = false
     @State private var errorMessage = ""
 
-    let onUserAuthenticated: (LoginResponse) -> Void
+    let onUserAuthenticated: (User) -> Void
 
-    init(onUserAuthenticated: @escaping (LoginResponse) -> Void) {
+    init(onUserAuthenticated: @escaping (User) -> Void) {
         self.onUserAuthenticated = onUserAuthenticated
     }
 
@@ -99,20 +99,16 @@ struct AuthView: View {
         isLoading = true
         errorMessage = ""
 
-        Task {
+        Task { @MainActor in
             do {
                 let response = try await api.login(username: username, password: password)
-                await MainActor.run {
-                    onUserAuthenticated(response)
-                    dismiss()
-                }
+
+                onUserAuthenticated(response)
+                dismiss()
             } catch {
                 print(error)
-
-                await MainActor.run {
-                    errorMessage = "Login failed. Please check your credentials."
-                    isLoading = false
-                }
+                errorMessage = "Login failed. Please check your credentials."
+                isLoading = false
             }
         }
     }
