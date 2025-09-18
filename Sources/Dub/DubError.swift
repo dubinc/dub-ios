@@ -28,5 +28,4 @@ public enum DubError: LocalizedError {
             return message
         }
     }
-
 }

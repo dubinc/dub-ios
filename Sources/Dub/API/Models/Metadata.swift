@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Metadata.swift
 //  Dub
 //
 //  Created by Ian MacCallum on 9/15/25.

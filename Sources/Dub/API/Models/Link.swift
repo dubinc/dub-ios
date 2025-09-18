@@ -1,5 +1,5 @@
 //
-//  TrackOpenRequestBody.swift
+//  Link.swift
 //  Dub
 //
 //  Created by Ian MacCallum on 9/11/25.
