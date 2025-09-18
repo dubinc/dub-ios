@@ -38,9 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Track first launch
         if isFirstLaunch {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
-                self?.trackOpen()
-            }
+            trackOpen()
             isFirstLaunch = false
         }
 
@@ -62,7 +60,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Task {
             do {
                 let response = try await Dub.shared.trackOpen(deepLink: deepLink)
+
                 print(response)
+
+                // Navigate to final link via link.url
+                guard let url = response.link?.url else {
+                    return
+                }
+
+                // Parse the deep link from the url
+                guard let deepLink = DeepLink(from: url) else {
+                    return
+                }
+
+                switch deepLink {
+                case .product(let id):
+                    // Fetch the product from the API
+                    let product = try await APIService.shared.fetchProduct(id)
+
+                    // Present the view controller for the product
+                    // Get the scene delegate and present the product detail view controller
+                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                              let sceneDelegate = windowScene.delegate as? SceneDelegate,
+                              let window = sceneDelegate.window,
+                              let navigationController = window.rootViewController as? UINavigationController else {
+                            return
+                        }
+                        
+                        let productDetailVC = ProductDetailViewController(product: product)
+                        navigationController.present(productDetailVC, animated: true)
+                }
             } catch let error as DubError {
                 print(error.localizedDescription)
             }
