@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		827820B02E7B2BD200FFD3D4 /* Dub in Frameworks */ = {isa = PBXBuildFile; productRef = 827820AF2E7B2BD200FFD3D4 /* Dub */; };
+		827820B22E7C4CA500FFD3D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827820B12E7C4CA500FFD3D4 /* API.swift */; };
+		827820B42E7C4CDA00FFD3D4 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827820B32E7C4CDA00FFD3D4 /* AuthManager.swift */; };
+		827820B62E7C4F7F00FFD3D4 /* ProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827820B52E7C4F7F00FFD3D4 /* ProductsView.swift */; };
+		827820B82E7C500300FFD3D4 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827820B72E7C500300FFD3D4 /* ProductDetailView.swift */; };
+		827820BC2E7C664E00FFD3D4 /* DeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827820BB2E7C664E00FFD3D4 /* DeepLink.swift */; };
 		82EA87362E7848F700A931EF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA87352E7848F700A931EF /* ContentView.swift */; };
 		82EA87382E78544300A931EF /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA87372E78544300A931EF /* AuthView.swift */; };
 		E2019AE829DAEF2600204720 /* DubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2019AE729DAEF2600204720 /* DubApp.swift */; };
@@ -17,7 +22,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		82D2E5982E7B2A7F004D032B /* DubSwiftUIKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DubSwiftUIKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		827820B12E7C4CA500FFD3D4 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		827820B32E7C4CDA00FFD3D4 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		827820B52E7C4F7F00FFD3D4 /* ProductsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsView.swift; sourceTree = "<group>"; };
+		827820B72E7C500300FFD3D4 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
+		827820BB2E7C664E00FFD3D4 /* DeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLink.swift; sourceTree = "<group>"; };
+		82D2E5982E7B2A7F004D032B /* DubUIKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DubUIKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82EA87352E7848F700A931EF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		82EA87372E78544300A931EF /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		E2019AE429DAEF2600204720 /* DubSwiftUIDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DubSwiftUIDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,7 +43,7 @@
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 82D2E5972E7B2A7F004D032B /* DubSwiftUIKitDemo */;
+			target = 82D2E5972E7B2A7F004D032B /* DubUIKitDemo */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -75,7 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				E2019AE429DAEF2600204720 /* DubSwiftUIDemo.app */,
-				82D2E5982E7B2A7F004D032B /* DubSwiftUIKitDemo.app */,
+				82D2E5982E7B2A7F004D032B /* DubUIKitDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,6 +98,11 @@
 				82EA87352E7848F700A931EF /* ContentView.swift */,
 				E2019AEB29DAEF2700204720 /* Assets.xcassets */,
 				E2019AED29DAEF2700204720 /* Preview Content */,
+				827820B12E7C4CA500FFD3D4 /* API.swift */,
+				827820B32E7C4CDA00FFD3D4 /* AuthManager.swift */,
+				827820B52E7C4F7F00FFD3D4 /* ProductsView.swift */,
+				827820B72E7C500300FFD3D4 /* ProductDetailView.swift */,
+				827820BB2E7C664E00FFD3D4 /* DeepLink.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -119,9 +134,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		82D2E5972E7B2A7F004D032B /* DubSwiftUIKitDemo */ = {
+		82D2E5972E7B2A7F004D032B /* DubUIKitDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 82D2E5AA2E7B2A80004D032B /* Build configuration list for PBXNativeTarget "DubSwiftUIKitDemo" */;
+			buildConfigurationList = 82D2E5AA2E7B2A80004D032B /* Build configuration list for PBXNativeTarget "DubUIKitDemo" */;
 			buildPhases = (
 				82D2E5942E7B2A7F004D032B /* Sources */,
 				82D2E5952E7B2A7F004D032B /* Frameworks */,
@@ -134,12 +149,12 @@
 			fileSystemSynchronizedGroups = (
 				82D2E5992E7B2A7F004D032B /* UIKit */,
 			);
-			name = DubSwiftUIKitDemo;
+			name = DubUIKitDemo;
 			packageProductDependencies = (
 				827820AF2E7B2BD200FFD3D4 /* Dub */,
 			);
-			productName = DubSwiftUIKitDemo;
-			productReference = 82D2E5982E7B2A7F004D032B /* DubSwiftUIKitDemo.app */;
+			productName = DubUIKitDemo;
+			productReference = 82D2E5982E7B2A7F004D032B /* DubUIKitDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E2019AE329DAEF2600204720 /* DubSwiftUIDemo */ = {
@@ -196,7 +211,7 @@
 			projectRoot = "";
 			targets = (
 				E2019AE329DAEF2600204720 /* DubSwiftUIDemo */,
-				82D2E5972E7B2A7F004D032B /* DubSwiftUIKitDemo */,
+				82D2E5972E7B2A7F004D032B /* DubUIKitDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -233,8 +248,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				82EA87382E78544300A931EF /* AuthView.swift in Sources */,
+				827820B82E7C500300FFD3D4 /* ProductDetailView.swift in Sources */,
 				82EA87362E7848F700A931EF /* ContentView.swift in Sources */,
+				827820B62E7C4F7F00FFD3D4 /* ProductsView.swift in Sources */,
+				827820B22E7C4CA500FFD3D4 /* API.swift in Sources */,
+				827820BC2E7C664E00FFD3D4 /* DeepLink.swift in Sources */,
 				E2019AE829DAEF2600204720 /* DubApp.swift in Sources */,
+				827820B42E7C4CDA00FFD3D4 /* AuthManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,7 +283,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dub.DubSwiftUIKitDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dub.DubUIKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -294,7 +314,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dub.DubSwiftUIKitDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dub.DubUIKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -491,7 +511,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		82D2E5AA2E7B2A80004D032B /* Build configuration list for PBXNativeTarget "DubSwiftUIKitDemo" */ = {
+		82D2E5AA2E7B2A80004D032B /* Build configuration list for PBXNativeTarget "DubUIKitDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				82D2E5AB2E7B2A80004D032B /* Debug */,

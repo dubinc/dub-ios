@@ -9,8 +9,16 @@ import Foundation
 import Combine
 
 actor DubAPI {
-    private let networkClient: NetworkClient = NetworkClient()
-    
+
+    private lazy var networkClient: NetworkClient = {
+        let config = URLSessionConfiguration.ephemeral
+        config.waitsForConnectivity = true
+        config.allowsCellularAccess = true
+        let session = URLSession(configuration: config)
+
+        return NetworkClient(session: session)
+    }()
+
     private let baseUrl: URL
     private let publishableKey: String
     
@@ -25,6 +33,7 @@ actor DubAPI {
         let url = try buildUrl(path: "/track/open")
 
         var request = URLRequest(url: url)
+        request.cachePolicy = .reloadIgnoringLocalCacheData
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(publishableKey)", forHTTPHeaderField: "Authorization")
@@ -39,6 +48,7 @@ actor DubAPI {
         let url = try buildUrl(path: "/track/lead/client")
 
         var request = URLRequest(url: url)
+        request.cachePolicy = .reloadIgnoringLocalCacheData
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(publishableKey)", forHTTPHeaderField: "Authorization")
@@ -53,6 +63,7 @@ actor DubAPI {
         let url = try buildUrl(path: "/track/sale/client")
 
         var request = URLRequest(url: url)
+        request.cachePolicy = .reloadIgnoringLocalCacheData
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(publishableKey)", forHTTPHeaderField: "Authorization")

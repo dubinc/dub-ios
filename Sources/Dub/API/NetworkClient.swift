@@ -5,7 +5,7 @@ internal actor NetworkClient {
     private let session: URLSession
     private let decoder: JSONDecoder
     
-    init(session: URLSession = .shared) {
+    init(session: URLSession) {
         self.session = session
         self.decoder = JSONDecoder()
     }

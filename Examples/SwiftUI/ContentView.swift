@@ -9,127 +9,29 @@ import SwiftUI
 import Dub
 
 struct ContentView: View {
-
     @Environment(\.dub) var dub: Dub
 
-    @State private var deepLinkURL: String?
+    private let api = APIService()
 
-    @State private var shouldNavigate = false
-    @State private var presentAuthenticationScreen = false
+    @StateObject private var authManager = AuthManager()
+    @State private var selectedProduct: Product?
 
-    @State private var userId: String?
-    @State private var productPurchased = false
+    // Uncomment the following line and comment out `isFirstLaunch` below to test pasting the currently copied link
+//    @State var isFirstLaunch = true
 
     @AppStorage("is_first_launch") private var isFirstLaunch = true
 
+
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 24) {
-                VStack(alignment: .leading, spacing: 20) {
-                    HStack(spacing: 16) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.green)
-                                .frame(width: 32, height: 32)
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.white)
-                                .fontWeight(.bold)
-                        }
-
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Click Tracking")
-                                .font(.headline)
-                            Text("Automatically tracks app opens from deep links and deferred deep links on launch")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-
-                    HStack(spacing: 16) {
-                        ZStack {
-                            Circle()
-                                .fill(userId != nil ? Color.green : Color.blue)
-                                .frame(width: 32, height: 32)
-                            if userId != nil {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.white)
-                                    .fontWeight(.bold)
-                            } else {
-                                Text("2")
-                                    .foregroundColor(.white)
-                                    .fontWeight(.bold)
-                            }
-                        }
-
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Lead Tracking")
-                                .font(.headline)
-                            Text("Track user signups and form submissions")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                            if userId == nil {
-                                Button("Sign Up") {
-                                    presentAuthenticationScreen = true
-                                }
-                                .buttonStyle(.borderedProminent)
-                                .padding(.top, 4)
-                            }
-                        }
-                    }
-
-                    HStack(spacing: 16) {
-                        ZStack {
-                            Circle()
-                                .fill(productPurchased ? Color.green : Color.blue)
-                                .frame(width: 32, height: 32)
-                            if productPurchased {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.white)
-                                    .fontWeight(.bold)
-                            } else {
-                                Text("3")
-                                    .foregroundColor(.white)
-                                    .fontWeight(.bold)
-                            }
-                        }
-
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Sale Tracking")
-                                .font(.headline)
-                            Text("Track purchases and revenue from your links")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                            if let userId, !productPurchased {
-                                Button("Purchase Product") {
-                                    // Handle purchase action
-                                    trackSale(
-                                        customerExternalId: userId,
-                                        amount: 10000,
-                                        eventName: "Purchase",
-                                        invoiceId: UUID().uuidString
-                                    )
-                                    productPurchased = true
-                                }
-                                .buttonStyle(.borderedProminent)
-                                .padding(.top, 4)
-                            }
-                        }
-                    }
-                    .opacity(userId == nil ? 0.5 : 1.0)
+        NavigationView {
+            ProductsView(
+                onUserAuthenticated: { user in
+                    onUserAuthenticated(user)
+                },
+                onProductSelected: { product in
+                    selectedProduct = product
                 }
-                .padding()
-                .background(Color.blue.opacity(0.1))
-                .cornerRadius(12)
-
-                if productPurchased {
-                    Button("Reset") {
-                        userId = nil
-                        productPurchased = false
-                    }
-                    .buttonStyle(.bordered)
-                }
-            }
-            .padding()
+            )
             .onOpenURL { url in
                 trackOpen(deepLink: url)
             }
@@ -139,25 +41,30 @@ struct ContentView: View {
                     isFirstLaunch = false
                 }
             }
-            .navigationDestination(isPresented: $shouldNavigate) {
-                if let url = deepLinkURL {
-                    DetailView(url: url)
-                }
+            .sheet(item: $selectedProduct) { product in
+                ProductDetailView(
+                    product: product,
+                    onProductPurchased: onProductPurchased
+                )
             }
-            .sheet(isPresented: $presentAuthenticationScreen) {
-                AuthView { userId, name, email in
-                    presentAuthenticationScreen = false
-                    trackLead(customerExternalId: userId, name: name, email: email)
-                    self.userId = userId
-                }
-            }
-            .navigationTitle("Dub SwiftUI Demo")
         }
+        .environmentObject(authManager)
+    }
+
+    private func onProductPurchased(_ product: Product, user: LoginResponse) {
+        authManager.login(user: user)
+        trackSale(product: product, user: user)
+    }
+
+    private func onUserAuthenticated(_ user: LoginResponse) {
+        authManager.login(user: user)
+        trackLead(for: user)
     }
 
     // Step 1: Track the open
     // Call `dub.trackOpen` from onAppear only on the first launch and `onOpenURL`
     private func trackOpen(deepLink: URL? = nil) {
+        print("Tracking open: \(deepLink?.absoluteString ?? "-")")
         Task {
             do {
                 let response = try await dub.trackOpen(deepLink: deepLink)
@@ -167,8 +74,18 @@ struct ContentView: View {
                     return
                 }
 
-                deepLinkURL = url
-                shouldNavigate = true
+                // Parse the deep link from the url
+                guard let deepLink = DeepLink(from: url) else {
+                    return
+                }
+
+                switch deepLink {
+                case .product(let id):
+                    // Fetch the product from the API
+                    let product = try await api.fetchProduct(id)
+                    selectedProduct = product
+                }
+
             } catch let error as DubError {
                 print(error.localizedDescription)
             }
@@ -177,14 +94,14 @@ struct ContentView: View {
 
     // Step 1: Track a lead event
     // Learn more about lead tracking [here](https://dub.co/docs/conversions/leads/client-side)
-    private func trackLead(customerExternalId: String, name: String, email: String) {
+    private func trackLead(for user: LoginResponse) {
         Task {
             do {
                 let response = try await dub.trackLead(
                     eventName: "User Sign Up",
-                    customerExternalId: customerExternalId,
-                    customerName: name,
-                    customerEmail: email
+                    customerExternalId: user.id,
+                    customerName: "\(user.firstName) \(user.lastName)",
+                    customerEmail: user.email
                 )
 
                 print(response)
@@ -196,33 +113,14 @@ struct ContentView: View {
 
     // Step 3: Track a sale event whenever a user completes a purchase in your app.
     // Learn more about sale tracking [here](https://dub.co/docs/conversions/sales/client-side)
-    private func trackSale(
-        customerExternalId: String,
-        amount: Int,
-        currency: String = "usd",
-        eventName: String? = "Purchase",
-        paymentProcessor: PaymentProcessor = .custom,
-        invoiceId: String? = nil,
-        metadata: Metadata? = nil,
-        leadEventName: String? = nil,
-        customerName: String? = nil,
-        customerEmail: String? = nil,
-        customerAvatar: String? = nil
-    ) {
+    private func trackSale(product: Product, user: LoginResponse) {
         Task {
             do {
                 let response = try await dub.trackSale(
-                    customerExternalId: customerExternalId,
-                    amount: amount,
-                    currency: currency,
-                    eventName: eventName,
-                    paymentProcessor: paymentProcessor,
-                    invoiceId: invoiceId,
-                    metadata: metadata,
-                    leadEventName: leadEventName,
-                    customerName: customerName,
-                    customerEmail: customerEmail,
-                    customerAvatar: customerAvatar
+                    customerExternalId: user.id,
+                    amount: Int(round(product.price * 100)),
+                    currency: "usd",
+                    eventName: "Product purchase"
                 )
 
                 print(response)

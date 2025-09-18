@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  DubSwiftUIKitDemo
+//  DubUIKitDemo
 //
 //  Created by Ian MacCallum on 9/17/25.
 //

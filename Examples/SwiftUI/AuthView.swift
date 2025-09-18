@@ -7,71 +7,86 @@
 
 import SwiftUI
 
+// MARK: - Auth View
 struct AuthView: View {
-    let onAuthenticated: (_ userId: String, _ name: String, _ email: String) -> Void
-    
-    @State private var name: String = "Tim"
-    @State private var email: String = "tim@apple.com"
     @Environment(\.dismiss) private var dismiss
-    
-    var body: some View {
-        NavigationStack {
-            VStack(spacing: 32) {
 
-                VStack(spacing: 20) {
+    private let api = APIService()
+    
+    @State private var username = "emilys"
+    @State private var password = "emilyspass"
+    @State private var isLoading = false
+    @State private var errorMessage = ""
+
+    let onUserAuthenticated: (LoginResponse) -> Void
+
+    init(onUserAuthenticated: @escaping (LoginResponse) -> Void) {
+        self.onUserAuthenticated = onUserAuthenticated
+    }
+
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 24) {
+                VStack(spacing: 8) {
+                    Text("Welcome Back")
+                        .font(.system(size: 28, weight: .bold))
+                    Text("Sign in to your account")
+                        .font(.system(size: 16, weight: .regular))
+                        .foregroundColor(.secondary)
+                }
+                .padding(.top, 40)
+
+                VStack(spacing: 16) {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Name")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                        
-                        TextField("Enter your name", text: $name)
-                            .textFieldStyle(.plain)
-                            .padding()
-                            .background(Color(.systemGray6))
-                            .cornerRadius(12)
-                            .autocapitalization(.words)
+                        Text("Username")
+                            .font(.system(size: 14, weight: .semibold))
+                        TextField("Enter username", text: $username)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(.system(size: 16))
                     }
-                    
+
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Email")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                        
-                        TextField("Enter your email", text: $email)
-                            .textFieldStyle(.plain)
-                            .padding()
-                            .background(Color(.systemGray6))
-                            .cornerRadius(12)
-                            .autocapitalization(.none)
-                            .keyboardType(.emailAddress)
-                            .textContentType(.emailAddress)
+                        Text("Password")
+                            .font(.system(size: 14, weight: .semibold))
+                        SecureField("Enter password", text: $password)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(.system(size: 16))
                     }
                 }
-                
+
+                if !errorMessage.isEmpty {
+                    Text(errorMessage)
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                }
+
+                Button(action: handleLogin) {
+                    HStack {
+                        if isLoading {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .scaleEffect(0.8)
+                        }
+                        Text(isLoading ? "Signing In..." : "Sign In")
+                            .font(.system(size: 16, weight: .semibold))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(12)
+                }
+                .disabled(isLoading || username.isEmpty || password.isEmpty)
+                .opacity((username.isEmpty || password.isEmpty) ? 0.6 : 1.0)
+
                 Spacer()
-                
-                Button(action: {
-                    onAuthenticated(UUID().uuidString, name, email)
-                }) {
-                    Text("Sign Up")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(
-                            name.isEmpty || email.isEmpty ? 
-                            Color.blue.opacity(0.5) : 
-                            Color.blue
-                        )
-                        .cornerRadius(16)
-                }
-                .disabled(name.isEmpty || email.isEmpty)
             }
-            .padding(24)
-            .navigationTitle("Sign Up")
-            .navigationBarTitleDisplayMode(.large)
+            .padding()
+            .navigationTitle("Sign In")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
                         dismiss()
                     }
@@ -79,10 +94,27 @@ struct AuthView: View {
             }
         }
     }
-}
 
-#Preview {
-    AuthView { userId, name, email in
-        print("User authenticated: \(name)")
+    private func handleLogin() {
+        isLoading = true
+        errorMessage = ""
+
+        Task {
+            do {
+                let response = try await api.login(username: username, password: password)
+                await MainActor.run {
+                    onUserAuthenticated(response)
+                    dismiss()
+                }
+            } catch {
+                print(error)
+
+                await MainActor.run {
+                    errorMessage = "Login failed. Please check your credentials."
+                    isLoading = false
+                }
+            }
+        }
     }
 }
+

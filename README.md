@@ -87,6 +87,9 @@ If you have additional installation requirements, [let us know](https://dub.co/c
 
 The SwiftUI example may be found at `/Examples/SwiftUI`.
 
+### UIKit
+
+The SwiftUI example may be found at `/Examples/UIKit`.
 
 # Development
 

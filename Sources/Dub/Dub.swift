@@ -113,7 +113,7 @@ public actor Dub {
     @discardableResult
     public func trackLead(
         eventName: String,
-        customerExternalId: String,
+        customerExternalId: IdConvertible,
         customerName: String? = nil,
         customerEmail: String? = nil,
         customerAvatar: String? = nil,
@@ -128,7 +128,7 @@ public actor Dub {
         let body = TrackLeadRequestBody(
             clickId: clickId,
             eventName: eventName,
-            customerExternalId: customerExternalId,
+            customerExternalId: customerExternalId.id,
             customerName: customerName,
             customerEmail: customerEmail,
             customerAvatar: customerAvatar,
@@ -164,7 +164,7 @@ public actor Dub {
     /// - Returns: `Structures/TrackSaleResponse`
     @discardableResult
     public func trackSale(
-        customerExternalId: String,
+        customerExternalId: IdConvertible,
         amount: Int,
         currency: String = "usd",
         eventName: String? = "Purchase",
@@ -177,7 +177,7 @@ public actor Dub {
         customerAvatar: String? = nil
     ) async throws -> TrackSaleResponse {
         let body = TrackSaleRequestBody(
-            customerExternalId: customerExternalId,
+            customerExternalId: customerExternalId.id,
             amount: amount,
             currency: currency,
             eventName: eventName,

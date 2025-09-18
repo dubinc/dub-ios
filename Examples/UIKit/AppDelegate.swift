@@ -20,16 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let dubPublishableKey = "<DUB_PUBLISHABLE_KEY>"
     private let dubDomain = "<DUB_DOMAIN>"
 
-    private var isFirstLaunch: Bool = true
+    // Uncomment the following line and comment out `isFirstLaunch` below to test pasting the currently copied link
+//    private var isFirstLaunch: Bool = true
 
-//    private var isFirstLaunch: Bool {
-//        get {
-//            UserDefaults.standard.object(forKey: "is_first_launch") as? Bool ?? true
-//        }
-//        set {
-//            UserDefaults.standard.set(newValue, forKey: "is_first_launch")
-//        }
-//    }
+    private var isFirstLaunch: Bool {
+        get {
+            UserDefaults.standard.object(forKey: "is_first_launch") as? Bool ?? true
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "is_first_launch")
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Step 2: Initialize the Dub SDK by calling `setup`
