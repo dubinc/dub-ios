@@ -3,6 +3,17 @@
   <h3>Dub iOS SDK</h3>
 </div>
 
+<p align="center">
+    Track deep link conversion events in your iOS app
+    <br />
+    <a href="https://dub.co/docs/concepts/deep-links/attribution"><strong>Learn more »</strong></a>
+    <br />
+    <br />
+    <a href="#compatibility"><strong>Compatibility</strong></a> ·
+    <a href="#installation"><strong>Installation</strong></a> ·
+    <a href="#development"><strong>Development</strong></a>
+</p>
+
 <br/>
 
 <!-- Start Summary [summary] -->
@@ -87,9 +98,9 @@ The SwiftUI example may be found at `/Examples/SwiftUI`.
 
 The SwiftUI example may be found at `/Examples/UIKit`.
 
-# Development
+## Development
 
-## Documentation
+### Documentation
 This project uses the [Swift-DocC Plugin](https://github.com/apple/swift-docc-plugin) to generate SDK docs from code comments. 
 
 To generate documents manually run the following command from the project root:
@@ -100,6 +111,6 @@ swift package --allow-writing-to-directory ./docs generate-documentation --targe
     
 To write doc comments, hover over a symbol and press `⌘ + ⌥ + /` (command + option + forward slash).
 
-## Contributions
+### Contributions
 
 Feel free to open a PR or a Github issue as a proof of concept and we'll do our best to include it in a future release!
