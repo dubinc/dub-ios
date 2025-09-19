@@ -1,10 +1,6 @@
 <div align="center">
-  <img src="https://github.com/dubinc/dub/assets/28986134/3815d859-afaa-48f9-a9b3-c09964e4d404" alt="Dub.co TypeScript SDK to interact with APIs.">
-  <h3>Dub.co iOS SDK</h3>
-  <a href="https://speakeasyapi.dev/"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20Speakeasy-212015?style=for-the-badge&logoColor=FBE331&logo=speakeasy&labelColor=545454" /></a>
-  <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="width: 100px; height: 28px;" />
-  </a>
+  <img src="https://github.com/user-attachments/assets/ad6a41fb-a512-440a-8bb2-d51342b8b6f0" alt="Dub.co TypeScript SDK to interact with APIs.">
+  <h3>Dub iOS SDK</h3>
 </div>
 
 <br/>
@@ -13,7 +9,7 @@
 Dub is the modern link attribution platform for short links, conversion tracking, and affiliate programs. 
 The Dub iOS SDK is a client side library built in Swift for both UIKit and SwiftUI. 
 It enables open tracking for deep links and deferred deep links as well as conversion tracking for sale and lead events.
-Learn more about the Dub.co iOS SDK in the [official documentation](https://dub.co/docs/sdks/ios/overview).
+Learn more about the Dub iOS SDK in the [official documentation](https://dub.co/docs/sdks/ios/overview).
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
