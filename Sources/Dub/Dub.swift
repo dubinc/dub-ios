@@ -12,7 +12,8 @@ import TVUIKit
 
 public actor Dub {
     // MARK: - Dub instance
-    private static var _shared: Dub!
+    nonisolated(unsafe) private(set) static var _shared: Dub!
+    private static let lock = NSLock()
 
     public static var shared: Dub {
         guard let dub = _shared else {
@@ -52,7 +53,9 @@ public actor Dub {
         domain: String,
         baseUrl: URL? = nil
     ) {
-        _shared = Dub(publishableKey: publishableKey, domain: domain, baseUrl: baseUrl)
+        lock.withLock {
+            _shared = Dub(publishableKey: publishableKey, domain: domain, baseUrl: baseUrl)
+        }
     }
 
     // MARK: - Tracking Methods
