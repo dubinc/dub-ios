@@ -12,7 +12,7 @@ import TVUIKit
 
 public actor Dub {
     // MARK: - Dub instance
-    private static var _shared: Dub!
+    nonisolated(unsafe) private(set) static var _shared: Dub!
 
     public static var shared: Dub {
         guard let dub = _shared else {
