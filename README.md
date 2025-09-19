@@ -1,6 +1,10 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/ad6a41fb-a512-440a-8bb2-d51342b8b6f0" alt="Dub.co TypeScript SDK to interact with APIs.">
-  <h3>Dub iOS SDK</h3>
+  <img src="https://github.com/dubinc/dub/assets/28986134/3815d859-afaa-48f9-a9b3-c09964e4d404" alt="Dub.co iOS SDK to track deep links and attribution.">
+  <h3>Dub.co iOS SDK</h3>
+  
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="width: 100px; height: 28px;" />
+  </a>
 </div>
 
 <p align="center">
@@ -40,7 +44,7 @@ Compatibility
 
 ### Supported iOS and Xcode versions
 
-The Dub iOS SDK is avilable for iOS and macOS. It requires the following minimum build tool versions:
+The Dub iOS SDK is available for iOS and macOS. It requires the following minimum build tool versions:
 
 | Tool  | Version |
 | ----- | ------- |
@@ -54,7 +58,7 @@ And supports the following device platforms:
 | iOS      | 16.0               |
 | macOS    | 10.13 (Ventura)    |
 
-If you require additional compatability, [let us know](https://dub.co/contact/support)!
+If you require additional compatibility, [let us know](https://dub.co/contact/support)!
 
 
 <!-- Start SDK Installation [installation] -->
