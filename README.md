@@ -60,8 +60,6 @@ And supports the following device platforms:
 
 If you require additional compatibility, [let us know](https://dub.co/contact/support)!
 
-
-<!-- Start SDK Installation [installation] -->
 ## Installation
 
 ### Swift Package Manager (Recommended)
@@ -74,9 +72,7 @@ In Xcode, select **File** > **Add Package Dependencies** and add `https://github
 
 If you have additional installation requirements, [let us know](https://dub.co/contact/support)!
 
-
-<!-- Usage [usage] -->
-## Usage
+## Examples
 
 ### SwiftUI
 
