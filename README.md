@@ -66,26 +66,10 @@ If you require additional compatibility, [let us know](https://dub.co/contact/su
 
 ### Swift Package Manager (Recommended)
 
-Option 1: Add the following lines to your `Package.swift` file:
-
-```swift
-let package = Package(
-    ...
-    dependencies: [
-        ...
-        .package(name: "Dub", url: "https://github.com/dubinc/dub-ios.git", from: "0.1.0"),
-    ],
-    targets: [
-        .target(
-            name: "MyApp",
-            dependencies: ["Dub"] // Add Dub as a dependency to your app's target
-        )
-    ]
-)
-```
-
-Option 2: You may manually install the package by navigating to the `Package Dependencies` section of your Xcode project pressing the `+` and installing `https://github.com/dubinc/dub-ios`.
-
+The Dub iOS SDK can be installed using the [Swift Package Manager](https://docs.swift.org/swiftpm/documentation/packagemanagerdocs/).
+  
+In Xcode, select **File** > **Add Package Dependencies** and add `https://github.com/dubinc/dub-ios` as the repository URL. Select the latest version of the SDK from the [release page](https://github.com/dubinc/dub-ios/releases).
+  
 ### Other
 
 If you have additional installation requirements, [let us know](https://dub.co/contact/support)!
