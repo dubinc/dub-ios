@@ -21,26 +21,30 @@
 <br/>
 
 <!-- Start Summary [summary] -->
-Dub is the modern link attribution platform for short links, conversion tracking, and affiliate programs. 
-The Dub iOS SDK is a client side library built in Swift for both UIKit and SwiftUI. 
+
+Dub is the modern link attribution platform for short links, conversion tracking, and affiliate programs.
+The Dub iOS SDK is a client side library built in Swift for both UIKit and SwiftUI.
 It enables open tracking for deep links and deferred deep links as well as conversion tracking for sale and lead events.
-Learn more about the Dub iOS SDK in the [official documentation](https://dub.co/docs/sdks/ios/overview).
+Learn more about the Dub iOS SDK in the [official documentation](https://dub.co/docs/sdks/client-side-mobile/installation-guides/swift).
+
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
+
 ## Table of Contents
+
 <!-- $toc-max-depth=2 -->
-  * [Compatibility](#compatibility)
-  * [Installation](#Installation)
-  * [Usage](#usage)
-* [Development](#development)
-  * [Documentation](#documentation)
-  * [Contributions](#contributions)
+
+- [Compatibility](#compatibility)
+- [Installation](#Installation)
+- [Usage](#usage)
+- [Development](#development)
+  - [Documentation](#documentation)
+  - [Contributions](#contributions)
 
 <!-- End Table of Contents [toc] -->
 
-Compatibility
--------------------------
+## Compatibility
 
 ### Supported iOS and Xcode versions
 
@@ -48,15 +52,15 @@ The Dub iOS SDK is available for iOS and macOS. It requires the following minimu
 
 | Tool  | Version |
 | ----- | ------- |
-| Xcode | 16+   |
-| Swift | 6+    |
+| Xcode | 16+     |
+| Swift | 6+      |
 
 And supports the following device platforms:
 
-| Platform | Version            |
-| -------- | ------------------ |
-| iOS      | 16.0               |
-| macOS    | 10.13 (Ventura)    |
+| Platform | Version         |
+| -------- | --------------- |
+| iOS      | 16.0            |
+| macOS    | 10.13 (Ventura) |
 
 If you require additional compatibility, [let us know](https://dub.co/contact/support)!
 
@@ -65,9 +69,9 @@ If you require additional compatibility, [let us know](https://dub.co/contact/su
 ### Swift Package Manager (Recommended)
 
 The Dub iOS SDK can be installed using the [Swift Package Manager](https://docs.swift.org/swiftpm/documentation/packagemanagerdocs/).
-  
+
 In Xcode, select **File** > **Add Package Dependencies** and add `https://github.com/dubinc/dub-ios` as the repository URL. Select the latest version of the SDK from the [release page](https://github.com/dubinc/dub-ios/releases).
-  
+
 ### Other
 
 If you have additional installation requirements, [let us know](https://dub.co/contact/support)!
@@ -85,14 +89,15 @@ The SwiftUI example may be found at `/Examples/UIKit`.
 ## Development
 
 ### Documentation
-This project uses the [Swift-DocC Plugin](https://github.com/apple/swift-docc-plugin) to generate SDK docs from code comments. 
+
+This project uses the [Swift-DocC Plugin](https://github.com/apple/swift-docc-plugin) to generate SDK docs from code comments.
 
 To generate documents manually run the following command from the project root:
 
 ```bash
 swift package --allow-writing-to-directory ./docs generate-documentation --target Dub --output-path ./docs
 ```
-    
+
 To write doc comments, hover over a symbol and press `⌘ + ⌥ + /` (command + option + forward slash).
 
 ### Contributions
