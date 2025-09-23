@@ -52,7 +52,7 @@ The Dub iOS SDK is available for iOS and macOS. It requires the following minimu
 | Tool  | Version |
 | ----- | ------- |
 | Xcode | 16+     |
-| Swift | 6+      |
+| Swift | 4.0+    |
 
 And supports the following device platforms:
 
