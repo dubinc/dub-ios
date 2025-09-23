@@ -1,10 +1,6 @@
 <div align="center">
-  <img src="https://github.com/dubinc/dub/assets/28986134/3815d859-afaa-48f9-a9b3-c09964e4d404" alt="Dub.co iOS SDK to track deep links and attribution.">
-  <h3>Dub.co iOS SDK</h3>
-  
-  <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="width: 100px; height: 28px;" />
-  </a>
+  <img src="https://github.com/user-attachments/assets/6b9d2dec-3139-453c-8a2f-cd0bce9a5bf8" alt="Dub.co iOS SDK to track deep links and attribution.">
+  <h3>Dub iOS SDK (BETA)</h3>
 </div>
 
 <p align="center">
@@ -22,9 +18,12 @@
 
 <!-- Start Summary [summary] -->
 
-Dub is the modern link attribution platform for short links, conversion tracking, and affiliate programs.
+[Dub](http://dub.co/) is the modern link attribution platform for short links, conversion tracking, and affiliate programs.
+
 The Dub iOS SDK is a client side library built in Swift for both UIKit and SwiftUI.
-It enables open tracking for deep links and deferred deep links as well as conversion tracking for sale and lead events.
+
+It enables open tracking for regular/[deferred deep links](https://dub.co/docs/concepts/deep-links/deferred-deep-linking) as well as [tracking lead and sale conversion events](https://dub.co/docs/concepts/deep-links/attribution).
+
 Learn more about the Dub iOS SDK in the [official documentation](https://dub.co/docs/sdks/client-side-mobile/installation-guides/swift).
 
 <!-- End Summary [summary] -->
