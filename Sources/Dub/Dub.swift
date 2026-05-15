@@ -82,9 +82,9 @@ public actor Dub {
             let clipboard: String? = nil
 #endif
 
-            if let deepLink = clipboard,  let url = resolveUrl(for: deepLink) {
+            if let clipboardText = clipboard, let resolvedUrl = resolveUrl(for: clipboardText) {
                 // Clipboard-based tracking
-                body = TrackOpenRequestBody(deepLink: url.absoluteString, dubDomain: domain)
+                body = TrackOpenRequestBody(deepLink: resolvedUrl, dubDomain: domain)
             } else {
                 // IP-based tracking fallback
                 body = TrackOpenRequestBody(dubDomain: domain)
@@ -198,18 +198,21 @@ public actor Dub {
     }
 
     // MARK: - Helpers
-    private func resolveUrl(for clipboardText: String) -> URL? {
+    private func resolveUrl(for clipboardText: String) -> String? {
         guard !clipboardText.isEmpty else { return nil }
 
         // If the pasted content is a valid url with the dub domain, use it
-        if clipboardText.contains(domain), let url = URL(string: clipboardText) {
-            return url
+        if clipboardText.contains(domain) {
+            if URL(string: clipboardText) != nil {
+                return clipboardText
+            }
         }
 
         // Fallback and try to construct a url from the dub domain and the
         // text (in the case it is a short link code that was copied)
-        if let url = URL(string: "\(domain)/\(clipboardText)") {
-            return url
+        let fallback = "\(domain)/\(clipboardText)"
+        if URL(string: fallback) != nil {
+            return fallback
         }
 
         return nil
