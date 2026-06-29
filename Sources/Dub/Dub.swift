@@ -74,7 +74,9 @@ public actor Dub {
             // Use the provided deep link
             body = TrackOpenRequestBody(deepLink: deepLink.absoluteString, dubDomain: domain)
         } else {
-#if os(iOS) || os(watchOS) || os(tvOS)
+#if os(iOS)
+            let clipboard = await Self.deferredDeepLinkClipboard()
+#elseif os(watchOS) || os(tvOS)
             let clipboard = UIPasteboard.general.hasStrings ? UIPasteboard.general.string : nil
 #elseif os(macOS)
             let clipboard = NSPasteboard.general.string(forType: .URL)
@@ -101,6 +103,31 @@ public actor Dub {
             throw error
         }
     }
+
+    /// The deferred-deep-link gating rule: the pasteboard value is read only when the
+    /// pasteboard's *metadata* reports a probable web URL. When it doesn't, `readValue` is
+    /// never evaluated, so non-link clipboard content never trips the system
+    /// "would like to paste from <device>" consent alert.
+    static func deferredDeepLink(hasProbableURL: Bool, readValue: () -> String?) -> String? {
+        guard hasProbableURL else { return nil }
+        return readValue()
+    }
+
+#if os(iOS)
+    /// Reads the pasteboard value for deferred deep linking only when its *metadata* reports a
+    /// probable web URL. `detectPatterns` inspects metadata and does not trigger the system
+    /// "would like to paste from <device>" alert; reading `UIPasteboard.general.string`
+    /// unconditionally does. Returns nil when no probable URL is present.
+    private static func deferredDeepLinkClipboard() async -> String? {
+        let hasURL: Bool = await withCheckedContinuation { continuation in
+            UIPasteboard.general.detectPatterns(for: [.probableWebURL]) { result in
+                let detected = (try? result.get())?.contains(.probableWebURL) ?? false
+                continuation.resume(returning: detected)
+            }
+        }
+        return deferredDeepLink(hasProbableURL: hasURL, readValue: { UIPasteboard.general.string })
+    }
+#endif
     
     /// Track a lead for a short link.
     /// - Parameters:
